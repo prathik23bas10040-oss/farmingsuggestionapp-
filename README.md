@@ -1,95 +1,65 @@
-# farmingsuggestionapp-
-import java.util.*;
-import java.io.*;
-public class FarmingSuggestionApp {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int choice = 0;
-        while (choice != 3) {
-            System.out.println("\n==== Farming Suggestion System ====");
-            System.out.println("1. Get Suggestions");
-            System.out.println("2. View Previous Records");
-            System.out.println("3. Exit");
-            System.out.println("Enter your choice: ");
-            choice = sc.nextInt();
-            if (choice == 1) {
-                getSuggestions(sc);
-            } else if (choice == 2) {
-                showRecords();
-            } else if (choice == 3) {
-                System.out.println("Exiting... Goodbye!");
-            } else {
-                System.out.println("Invalid option! Try again.");
-            }
-        }
-    }
-    public static void getSuggestions(Scanner sc) {
-        System.out.println("Enter temperature (°C): ");
-        int temp = sc.nextInt();
-        System.out.println("Enter rainfall (mm): ");
-        int rain = sc.nextInt();
-        String crop = "";
-        String irrigation = "";
-        String warning = "";
-        if (temp >= 20 && temp <= 30 && rain >= 80 && rain <= 150) {
-            crop = "Rice";
-        } else if (temp >= 25 && temp <= 35 && rain < 80) {
-            crop = "Millets";
-        } else if (temp >= 15 && temp <= 25 && rain > 150) {
-            crop = "Sugarcane";
-        } else if (temp >= 10 && temp <= 20 && rain < 60) {
-            crop = "Wheat";
-        } else {
-            crop = "No perfect crop found";
-        }
-        if (rain < 50) {
-            irrigation = "High irrigation needed";
-        } else if (rain < 120) {
-            irrigation = "Moderate irrigation needed";
-        } else {
-            irrigation = "No irrigation needed";
-        }
-        if (temp > 40) {
-            warning += "Heat wave alert! ";
-        }
-        if (rain > 200) {
-            warning += "Heavy rainfall alert! ";
-        }
-        if (rain < 20) {
-            warning += "Drought warning! ";
-        }
-        System.out.println("\n=== Suggestions ===");
-        System.out.println("Crop Suggestion: " + crop);
-        System.out.println("Irrigation Suggestion: " + irrigation);
-        System.out.println("Warnings: " + (warning.equals("") ? "None" : warning));
-        saveRecord(temp, rain, crop, irrigation, warning);
-    }
-    public static void saveRecord(int temp, int rain, String crop, String irrigation, String warning) {
-        try {
-            FileWriter fw = new FileWriter("records.txt", true);
-            fw.write("Temp: " + temp + ", Rain: " + rain + ", Crop: " + crop + ", Irrigation: " + irrigation + ", Warning: " + warning + "\n");
-            fw.close();
-            System.out.println("Record saved!");
-        } catch (Exception e) {
-            System.out.println("Error saving record.");
-        }
-    }
-    public static void showRecords() {
-        try {
-            File f = new File("records.txt");
-            if (!f.exists()) {
-                System.out.println("No records found.");
-                return;
-            }
-            Scanner fileReader = new Scanner(f);
-            System.out.println("\n=== Past Records ===");
-            while (fileReader.hasNextLine()) {
-                System.out.println(fileReader.nextLine());
-            }
-            fileReader.close();
-        } catch (Exception e) {
-            System.out.println("Error reading file.");
-        }
-    }
-}
+TECHNICAL DOCUMENTATION
+WEATHER-BASED FARMING SUGGESTION SYSTEM
 
+1. INTRODUCTION
+This project is a small Java program that helps farmers by giving simple farming suggestions using just two things: temperature and rainfall.
+The program tells the user:
+•	which crop is suitable,
+•	how much irrigation is needed, and
+•	if there is any weather warning (like heatwave, drought, or heavy rain).
+
+2. HOW THE SYSTEM WORKS 
+1.	The user enters temperature and rainfall.
+2.	The program checks these values.
+3.	Based on simple rules, it decides:
+o	Which crop is best
+o	How much irrigation is needed
+o	Whether there is any warning
+4.	It shows the results on the screen.
+5.	It also saves the results into a text file so the user can view past records.
+
+3. FEATURES OF THE SYSTEM
+•	Suggests a crop based on weather
+•	Gives irrigation advice
+•	Shows weather warnings
+•	Saves results in a text file
+•	Allows the user to see old records
+•	Very easy to use and understand
+
+4. MAIN LOGIC USED IN THE PROGRAM
+CROP SUGGESTION
+•	High temp + low rain → Millets
+•	Medium temp + good rain → Rice
+•	Low temp + medium rain → Wheat
+IRRIGATION LEVEL
+•	Low rainfall → High irrigation
+•	Medium rainfall → Moderate irrigation
+•	High rainfall → Low irrigation
+WARNINGS
+•	Temperature > 40°C → Heatwave warning
+•	Rainfall < 20mm → Drought warning
+•	Rainfall > 200mm → Heavy rain warning
+
+5. ADVANTAGES
+•	Easy to understand for beginners
+•	Helps students learn real-life usage of Java
+•	Gives quick and simple farming suggestions
+•	Works on any computer
+•	No complex setup needed
+•	
+6. LIMITATIONS
+•	Uses fixed rules
+•	Not connected to real weather API
+•	Limited crop options
+•	No graphical interface (only console)
+
+7. FUTURE IMPROVEMENTS
+In the future, this project can be made better by adding:
+•	Soil type input
+•	Real-time weather API
+•	More crops
+•	A simple graphical UI
+•	Better logic or machine learning
+•	
+8. CONCLUSION
+This project is a simple and helpful example of how Java programming can support farming decisions. 
